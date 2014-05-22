@@ -25,7 +25,7 @@ $config = [
         ],
         'gii' => 'yii\gii\Module',
         'log' => [
-            'traceLevel' => YII_DEBUG ? 3 : 0,
+            'traceLevel' => 3,
             'targets' => [
                 [
                     'class' => 'yii\log\FileTarget',

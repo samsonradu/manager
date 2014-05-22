@@ -27,6 +27,9 @@ class Driver extends \yii\db\ActiveRecord
                     \yii\db\ActiveRecord::EVENT_BEFORE_INSERT => ['createdAt', 'updatedAt'],
                     \yii\db\ActiveRecord::EVENT_BEFORE_UPDATE => 'updatedAt',
                 ],
+                'value' => function() {
+                    return date('Y-m-d H:i:s');
+                }
             ],
         ];
     }

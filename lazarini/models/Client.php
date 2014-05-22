@@ -10,7 +10,6 @@ use yii\behaviors\TimestampBehavior;
  *
  * @property integer $id
  * @property string $name
- * @property string $address
  * @property string $phone
  * @property string $reference
  * @property string $createdAt
@@ -30,6 +29,9 @@ class Client extends \yii\db\ActiveRecord
                     \yii\db\ActiveRecord::EVENT_BEFORE_INSERT => ['createdAt', 'updatedAt'],
                     \yii\db\ActiveRecord::EVENT_BEFORE_UPDATE => 'updatedAt',
                 ],
+                'value' => function() {
+                        return date('Y-m-d H:i:s');
+                }
             ],
         ];
     }
@@ -48,10 +50,8 @@ class Client extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'address', 'phone', 'createdAt', 'updatedAt'], 'required'],
-            [['createdAt', 'updatedAt'], 'safe'],
+            [['name', 'phone'], 'required'],
             [['name', 'phone'], 'string', 'max' => 45],
-            [['address'], 'string', 'max' => 500],
             [['reference'], 'string', 'max' => 200]
         ];
     }
@@ -64,7 +64,6 @@ class Client extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Name',
-            'address' => 'Address',
             'phone' => 'Phone',
             'reference' => 'Reference',
             'createdAt' => 'Created At',

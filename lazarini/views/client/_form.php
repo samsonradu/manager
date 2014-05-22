@@ -16,13 +16,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => 45]) ?>
 
-    <?= $form->field($model, 'address')->textInput(['maxlength' => 500]) ?>
-
     <?= $form->field($model, 'phone')->textInput(['maxlength' => 45]) ?>
-
-    <?= $form->field($model, 'createdAt')->textInput() ?>
-
-    <?= $form->field($model, 'updatedAt')->textInput() ?>
 
     <?= $form->field($model, 'reference')->textInput(['maxlength' => 200]) ?>
 
