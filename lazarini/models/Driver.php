@@ -48,7 +48,6 @@ class Driver extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'createdAt'], 'required'],
             [['createdAt', 'updatedAt'], 'safe'],
             [['name'], 'string', 'max' => 100]
         ];
@@ -73,5 +72,12 @@ class Driver extends \yii\db\ActiveRecord
     public function getOrders()
     {
         return $this->hasMany(Order::className(), ['driverId' => 'id']);
+    }
+
+    public static function getListOptions()
+    {
+        $data = array();
+        $data[] = \yii\helpers\ArrayHelper::map(self::findBySQL('SELECT id, name AS name FROM driver ORDER BY name')->all(),'id','name');
+        return $data;
     }
 }

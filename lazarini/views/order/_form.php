@@ -14,19 +14,22 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'clientId')->textInput() ?>
+    <?= $form->field($model, 'clientId')->dropDownList(\app\models\Client::getListOptions())?>
+
+    <?= $form->field($model, 'description')->textInput(['maxlength' => 2000]) ?>
 
     <?= $form->field($model, 'total')->textInput(['maxlength' => 45]) ?>
 
-    <?= $form->field($model, 'createdAt')->textInput() ?>
+    <hr>
 
-    <?= $form->field($model, 'driverId')->textInput() ?>
+    <?= $form->field($model, 'driverId')->dropDownList(\app\models\Driver::getListOptions()) ?>
 
-    <?= $form->field($model, 'status')->textInput() ?>
+    <?= $form->field($model, 'eta')->textInput(['maxlength' => 5]) ?>
 
-    <?= $form->field($model, 'updatedAt')->textInput() ?>
+    </hr>
 
-    <?= $form->field($model, 'description')->textInput(['maxlength' => 2000]) ?>
+    <?= $form->field($model, 'status')->dropDownList(\app\models\Order::getListOptions()) ?>
+
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

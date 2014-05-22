@@ -31,7 +31,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'clientId',
+            'clientId' => [
+                'label' => 'Client',
+                'value' => $model->client->name
+            ],
             'status',
             'description',
             'driverId',

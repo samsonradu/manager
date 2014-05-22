@@ -78,4 +78,11 @@ class Client extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Order::className(), ['clientId' => 'id']);
     }
+
+    public static function getListOptions()
+    {
+        $data = array();
+        $data[] = \yii\helpers\ArrayHelper::map(self::findBySQL('SELECT id, CONCAT(name," - ", phone) AS name FROM client ORDER BY name')->all(),'id','name');
+        return $data;
+    }
 }

@@ -23,6 +23,11 @@ use yii\behaviors\TimestampBehavior;
 class Order extends \yii\db\ActiveRecord
 {
 
+    const STATUS_PENDING = 'pending';
+    const STATUS_DELIVERED = 'delivered';
+    const STATUS_REFUSED = 'refused';
+    const STATUS_CANCELLED = 'cancelled';
+
     public function behaviors()
     {
         return [
@@ -53,7 +58,7 @@ class Order extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['clientId', 'total', 'eta', 'createdAt'], 'required'],
+            [['clientId', 'total', 'eta'], 'required'],
             [['clientId', 'driverId', 'eta'], 'integer'],
             [['status'], 'string'],
             [['createdAt', 'updatedAt'], 'safe'],
@@ -94,5 +99,16 @@ class Order extends \yii\db\ActiveRecord
     public function getClient()
     {
         return $this->hasOne(Client::className(), ['id' => 'clientId']);
+    }
+
+    public static function getListOptions()
+    {
+        $data = array(
+            self::STATUS_PENDING => 'PENDING',
+            self::STATUS_DELIVERED => 'DELIVERED',
+            self::STATUS_REFUSED => 'REFUSED',
+            self::STATUS_CANCELLED => 'CANCELLED',
+        );
+        return $data;
     }
 }
