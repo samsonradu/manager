@@ -101,6 +101,24 @@ class Order extends \yii\db\ActiveRecord
         return $this->hasOne(Client::className(), ['id' => 'clientId']);
     }
 
+    /**
+     * Get totals
+     * @param $status
+     * @param $dateStart
+     * @param $dateEnd
+     *
+     * @return float
+     */
+    public static function getTotal($status, $dateStart, $dateEnd){
+        $sql = "SELECT SUM(TOTAL) FROM `order` WHERE STATUS=:status AND createdAt>=:dateStart AND createdAt<:dateEnd;";
+        $command = \Yii::$app->db->createCommand($sql, [
+            ':status' => $status,
+            ':dateStart' => $dateStart,
+            ':dateEnd' => $dateEnd
+        ]);
+        return (float) $command->queryScalar();
+    }
+
     public static function getListOptions()
     {
         $data = array(

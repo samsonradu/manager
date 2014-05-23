@@ -16,6 +16,7 @@ use yii\behaviors\TimestampBehavior;
  * @property string $updatedAt
  *
  * @property Order[] $orders
+ * @property Addresses[] $addresses
  */
 class Client extends \yii\db\ActiveRecord
 {
@@ -79,10 +80,32 @@ class Client extends \yii\db\ActiveRecord
         return $this->hasMany(Order::className(), ['clientId' => 'id']);
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAddresses()
+    {
+        return $this->hasMany(Address::className(), ['clientId' => 'id']);
+    }
+
+
     public static function getListOptions()
     {
         $data = array();
+        $data[] = ['' => '...'];
         $data[] = \yii\helpers\ArrayHelper::map(self::findBySQL('SELECT id, CONCAT(name," - ", phone) AS name FROM client ORDER BY name')->all(),'id','name');
         return $data;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOrderCount()
+    {
+        return \app\models\Order::find()->where(
+            [
+                'clientId' => $this->id
+            ]
+        )->count();
     }
 }

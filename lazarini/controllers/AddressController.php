@@ -8,6 +8,7 @@ use app\models\AddressSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * AddressController implements the CRUD actions for Address model.
@@ -17,6 +18,16 @@ class AddressController extends Controller
     public function behaviors()
     {
         return [
+            /*'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['*'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],*/
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -56,11 +67,15 @@ class AddressController extends Controller
     /**
      * Creates a new Address model.
      * If creation is successful, the browser will be redirected to the 'view' page.
+     * @param integer $clientId
+     *
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($clientId = null)
     {
         $model = new Address;
+        if ($clientId)
+            $model->clientId = $clientId;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);

@@ -8,7 +8,7 @@ use yii\widgets\DetailView;
  * @var app\models\Order $model
  */
 
-$this->title = $model->id;
+$this->title = $model->client->name." - ".$model->description;
 $this->params['breadcrumbs'][] = ['label' => 'Orders', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -30,17 +30,18 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
             'clientId' => [
                 'label' => 'Client',
                 'value' => $model->client->name
             ],
             'status',
             'description',
-            'driverId',
+            'driver' => [
+                'label' => 'Driver',
+                'value' => $model->driver->name
+            ],
             'total',
-            'createdAt',
-            'updatedAt',
+            'createdAt'
         ],
     ]) ?>
 

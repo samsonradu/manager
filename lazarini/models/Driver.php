@@ -10,6 +10,7 @@ use yii\behaviors\TimestampBehavior;
  *
  * @property integer $id
  * @property string $name
+ * @property string $status
  * @property string $createdAt
  * @property string $updatedAt
  *
@@ -49,6 +50,7 @@ class Driver extends \yii\db\ActiveRecord
     {
         return [
             [['createdAt', 'updatedAt'], 'safe'],
+            [['status'], 'string'],
             [['name'], 'string', 'max' => 100]
         ];
     }
@@ -61,6 +63,7 @@ class Driver extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Name',
+            'status' => 'Status',
             'createdAt' => 'Created At',
             'updatedAt' => 'Updated At',
         ];
@@ -77,6 +80,7 @@ class Driver extends \yii\db\ActiveRecord
     public static function getListOptions()
     {
         $data = array();
+        $data[] = ['' => '...'];
         $data[] = \yii\helpers\ArrayHelper::map(self::findBySQL('SELECT id, name AS name FROM driver ORDER BY name')->all(),'id','name');
         return $data;
     }

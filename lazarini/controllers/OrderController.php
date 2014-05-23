@@ -8,6 +8,7 @@ use app\models\OrderSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * OrderController implements the CRUD actions for Order model.
@@ -16,7 +17,18 @@ class OrderController extends Controller
 {
     public function behaviors()
     {
+
         return [
+            /*'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['*'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],*/
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -56,11 +68,17 @@ class OrderController extends Controller
     /**
      * Creates a new Order model.
      * If creation is successful, the browser will be redirected to the 'view' page.
+     * @param integer $clientId
+     *
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($clientId)
     {
         $model = new Order;
+
+        $model = new Order;
+        if ($clientId)
+            $model->clientId = $clientId;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);

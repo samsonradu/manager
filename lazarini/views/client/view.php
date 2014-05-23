@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\grid\GridView;
 
 /**
  * @var yii\web\View $this
@@ -30,13 +31,53 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
             'name',
             'phone',
             'reference',
-            'createdAt',
-            'updatedAt',
         ],
     ]) ?>
+    <hr>
+    <h3>Addresses</h3>
+    <p>
+        <?= Html::a('Create Address', \yii::$app->urlManager->createUrl(['/address/create', 'clientId' => $model->id]), ['class' => 'btn btn-success']) ?>
+    </p>
+
+    <?= GridView::widget([
+        'dataProvider' => (new \app\models\AddressSearch())->search(['clientId' => $model->id]),
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+            'location',
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'controller' => 'address'
+            ]
+        ],
+    ]); ?>
+
+    <hr>
+    <h3>Orders</h3>
+    <p>
+        <?= Html::a('Create Order', ['/order/create', 'clientId' => $model->id], ['class' => 'btn btn-success']) ?>
+    </p>
+
+    <?= GridView::widget([
+        'dataProvider' => (new \app\models\OrderSearch())->search(['clientId' => $model->id]),
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+            'description',
+            'createdAt',
+            'total',
+            'driver.name' => [
+                'header' => 'Driver',
+                'value' => function($data) {
+                    return $data->driver->name;
+                }
+            ],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'controller' => 'order'
+            ],
+        ],
+    ]); ?>
 
 </div>

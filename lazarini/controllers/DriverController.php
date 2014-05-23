@@ -8,6 +8,7 @@ use app\models\DriverSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * DriverController implements the CRUD actions for Driver model.
@@ -17,6 +18,16 @@ class DriverController extends Controller
     public function behaviors()
     {
         return [
+            /*'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['*'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],*/
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
