@@ -53,4 +53,12 @@ class Address extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Client::className(), ['id' => 'clientId']);
     }
+
+    public static function getListOptions($clientId = null)
+    {
+        $data = array();
+        $data[] = ['' => '...'];
+        $data[] = \yii\helpers\ArrayHelper::map(self::findBySQL('SELECT id, location FROM address WHERE clientId=:clientId ORDER BY clientId', [':clientId'=> $clientId])->all(), 'id', 'location');
+        return $data;
+    }
 }

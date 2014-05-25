@@ -72,13 +72,15 @@ class OrderController extends Controller
      *
      * @return mixed
      */
-    public function actionCreate($clientId)
+    public function actionCreate($clientId, $address = null)
     {
         $model = new Order;
 
         $model = new Order;
         if ($clientId)
             $model->clientId = $clientId;
+        if ($address)
+            $model->address = $address;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);

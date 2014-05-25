@@ -8,7 +8,7 @@ use yii\widgets\DetailView;
  * @var app\models\Address $model
  */
 
-$this->title = $model->id;
+$this->title = $model->client->name;
 $this->params['breadcrumbs'][] = ['label' => 'Addresses', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -30,8 +30,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'clientId',
+            'clientId' => [
+                'label' => 'Client',
+                'value' => $model->client->name
+            ],
             'location',
         ],
     ]) ?>

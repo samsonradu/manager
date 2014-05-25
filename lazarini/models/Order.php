@@ -13,6 +13,7 @@ use yii\behaviors\TimestampBehavior;
  * @property string $status
  * @property string $description
  * @property integer $driverId
+ * @property string $address
  * @property string $total
  * @property string $createdAt
  * @property string $updatedAt
@@ -60,7 +61,7 @@ class Order extends \yii\db\ActiveRecord
         return [
             [['clientId', 'total', 'eta'], 'required'],
             [['clientId', 'driverId', 'eta'], 'integer'],
-            [['status'], 'string'],
+            [['status', 'address'], 'string'],
             [['createdAt', 'updatedAt'], 'safe'],
             [['description'], 'string', 'max' => 2000],
             [['total'], 'string', 'max' => 45]
@@ -75,6 +76,7 @@ class Order extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'clientId' => 'Client',
+            'address' => 'Address',
             'status' => 'Status',
             'description' => 'Description',
             'driverId' => 'Driver',

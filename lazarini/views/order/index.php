@@ -15,9 +15,6 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="order-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <p>
-        <?= Html::a('Create Order', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -27,7 +24,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'client.name'=> [
                 'header' => 'Client',
-                'value' => 'client.name'
+                'value' => function($data) {
+                    return Html::a($data->client->name, \yii::$app->urlManager->createUrl(['client/view', 'id' => $data->clientId]));
+                },
+                'format' => 'html'
             ],
             'status',
             'description',
@@ -35,8 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'header' => 'Driver',
                 'value' => 'driver.name'
             ],
-            // 'total',
-            // 'createdAt',
+             'createdAt',
             // 'updatedAt',
 
             ['class' => 'yii\grid\ActionColumn'],

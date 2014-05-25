@@ -32,8 +32,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'clientId' => [
                 'label' => 'Client',
-                'value' => $model->client->name
+                'value' =>  Html::a($model->client->name, \yii::$app->urlManager->createUrl(['client/view', 'id' => $model->clientId])),
+                'format' => 'html'
             ],
+            'address',
             'status',
             'description',
             'driver' => [

@@ -16,6 +16,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'clientId')->dropDownList(\app\models\Client::getListOptions())?>
 
+    <?= $form->field($model, 'address')->textInput()?>
+
     <?= $form->field($model, 'description')->textInput(['maxlength' => 2000]) ?>
 
     <?= $form->field($model, 'total')->textInput(['maxlength' => 45]) ?>

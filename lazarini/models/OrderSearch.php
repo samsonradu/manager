@@ -15,7 +15,7 @@ class OrderSearch extends Order
     public function rules()
     {
         return [
-            [['id', 'clientId', 'driverId'], 'integer'],
+            [['id', 'clientId', 'address', 'driverId'], 'integer'],
             [['status', 'description', 'total', 'eta', 'createdAt', 'updatedAt'], 'safe'],
         ];
     }
@@ -32,6 +32,7 @@ class OrderSearch extends Order
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'=> ['defaultOrder' => ['createdAt' => SORT_DESC]]
         ]);
 
         if (!($this->load($params) && $this->validate())) {
@@ -41,6 +42,7 @@ class OrderSearch extends Order
         $query->andFilterWhere([
             'id' => $this->id,
             'clientId' => $this->clientId,
+            'address' => $this->address,
             'driverId' => $this->driverId,
             'eta'      => $this->eta,
             'createdAt' => $this->createdAt,
