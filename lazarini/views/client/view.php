@@ -26,6 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
+        <?= Html::a('Create Address', \yii::$app->urlManager->createUrl(['/address/create', 'clientId' => $model->id]), ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= DetailView::widget([
@@ -34,25 +35,27 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
             'phone',
             'reference',
+            'address' => [
+                'label' => 'Addresses',
+                'value'  => GridView::widget([
+                    'dataProvider' => (new \app\models\AddressSearch())->search(['clientId' => $model->id]),
+                    'layout' => '{items}',
+                    'columns' => [
+                        ['class' => 'yii\grid\SerialColumn'],
+                        'location',
+                        [
+                            'class' => 'yii\grid\ActionColumn',
+                            'controller' => 'address'
+                        ]
+                    ],
+                ]),
+                'format' => 'html'
+            ]
         ],
     ]) ?>
     <hr>
-    <h3>Addresses</h3>
-    <p>
-        <?= Html::a('Create Address', \yii::$app->urlManager->createUrl(['/address/create', 'clientId' => $model->id]), ['class' => 'btn btn-success']) ?>
-    </p>
 
-    <?= GridView::widget([
-        'dataProvider' => (new \app\models\AddressSearch())->search(['clientId' => $model->id]),
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-            'location',
-            [
-                'class' => 'yii\grid\ActionColumn',
-                'controller' => 'address'
-            ]
-        ],
-    ]); ?>
+
 
     <hr>
     <h3>Orders</h3>
